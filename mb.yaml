@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bidding
+  labels:
+    app: bidding
+    tier: backend
+    owner: badboyd
+  annotations:
+    version: "0.0.1"
+    chartVersion: 1.1.1
+
+spec:
+  replicas: 1
+  minReadySeconds: 30
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: bidding
+  template:
+    metadata:
+      labels:
+        app: bidding
+        namespace: default
+    spec:
+
+      initContainers:
+
+      containers:
+      - name: bidding
+        image: badboyd/bidding:0.0.1
+        resources:
+          limits:
+            cpu: 0.4
+            memory: 256Mi
+          requests:
+            cpu: 0.2
+            memory: 256Mi
